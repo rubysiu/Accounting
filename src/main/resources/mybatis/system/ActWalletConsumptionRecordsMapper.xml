@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruby.project.system.mapper.ActWalletConsumptionRecordsMapper">
+
+    <resultMap type="ActWalletConsumptionRecords" id="ActWalletConsumptionRecordsResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="money"    column="money"    />
+        <result property="preMoney"    column="pre_money"    />
+        <result property="balanceMoney"    column="balance_money"    />
+        <result property="type"    column="type"    />
+        <result property="walletId"    column="wallet_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectActWalletConsumptionRecordsVo">
+        select id, name, money, pre_money, balance_money, type, wallet_id, user_id, dept_id, create_by, create_time, update_by, update_time, remark from act_wallet_consumption_records
+    </sql>
+
+    <select id="selectActWalletConsumptionRecordsList" parameterType="ActWalletConsumptionRecords" resultMap="ActWalletConsumptionRecordsResult">
+        <include refid="selectActWalletConsumptionRecordsVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="money != null "> and money = #{money}</if>
+            <if test="preMoney != null "> and pre_money = #{preMoney}</if>
+            <if test="balanceMoney != null "> and balance_money = #{balanceMoney}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="walletId != null "> and wallet_id = #{walletId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <!-- 数据范围过滤 -->
+            ${params.dataScope}
+        </where>
+    </select>
+
+    <select id="selectActWalletConsumptionRecordsById" parameterType="Long" resultMap="ActWalletConsumptionRecordsResult">
+        <include refid="selectActWalletConsumptionRecordsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertActWalletConsumptionRecords" parameterType="ActWalletConsumptionRecords" useGeneratedKeys="true" keyProperty="id">
+        insert into act_wallet_consumption_records
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="money != null">money,</if>
+            <if test="preMoney != null">pre_money,</if>
+            <if test="balanceMoney != null">balance_money,</if>
+            <if test="type != null">type,</if>
+            <if test="walletId != null">wallet_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="money != null">#{money},</if>
+            <if test="preMoney != null">#{preMoney},</if>
+            <if test="balanceMoney != null">#{balanceMoney},</if>
+            <if test="type != null">#{type},</if>
+            <if test="walletId != null">#{walletId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateActWalletConsumptionRecords" parameterType="ActWalletConsumptionRecords">
+        update act_wallet_consumption_records
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="preMoney != null">pre_money = #{preMoney},</if>
+            <if test="balanceMoney != null">balance_money = #{balanceMoney},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="walletId != null">wallet_id = #{walletId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteActWalletConsumptionRecordsById" parameterType="Long">
+        delete from act_wallet_consumption_records where id = #{id}
+    </delete>
+
+    <delete id="deleteActWalletConsumptionRecordsByIds" parameterType="String">
+        delete from act_wallet_consumption_records where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

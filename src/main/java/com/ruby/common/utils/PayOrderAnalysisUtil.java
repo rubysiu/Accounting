@@ -34,7 +34,7 @@ public class PayOrderAnalysisUtil {
             if(row.getOriginalLineNumber() > 16){
                 Map<String,Object> map = new HashMap<>();
                 for (int i = 0; i < header.size(); i++) {
-                    map.put(header.get(i), row.get(i));
+                    map.put(String.valueOf(i), row.get(i));
                 }
                 mapList.add(map);
             }
@@ -78,7 +78,7 @@ public class PayOrderAnalysisUtil {
             if(j > 21){
                 Map<String,Object> map = new HashMap<>();
                 for (int i = 0; i < header.size(); i++) {
-                    map.put(header.get(i), rows.get(j).get(i));
+                    map.put(String.valueOf(i), rows.get(j).get(i));
                 }
                 mapList.add(map);
             }

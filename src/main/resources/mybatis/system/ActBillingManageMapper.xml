@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruby.project.system.mapper.ActBillingManageMapper">
+
+    <resultMap type="ActBillingManage" id="ActBillingManageResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="walletId"    column="wallet_id"    />
+        <result property="way"    column="way"    />
+        <result property="collection4Disbursement"    column="collection_4_disbursement"    />
+        <result property="money"    column="money"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectActBillingManageVo">
+        select id, name, category_id, wallet_id, way, collection_4_disbursement, money, user_id, dept_id, create_by, create_time, update_by, update_time, remark from act_billing_manage
+    </sql>
+
+    <select id="selectActBillingManageList" parameterType="ActBillingManage" resultMap="ActBillingManageResult">
+        <include refid="selectActBillingManageVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="categoryId != null "> and category_id = #{categoryId}</if>
+            <if test="walletId != null "> and wallet_id = #{walletId}</if>
+            <if test="way != null  and way != ''"> and way = #{way}</if>
+            <if test="collection4Disbursement != null  and collection4Disbursement != ''"> and collection_4_disbursement = #{collection4Disbursement}</if>
+            <if test="money != null "> and money = #{money}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <!-- 数据范围过滤 -->
+            ${params.dataScope}
+        </where>
+    </select>
+
+    <select id="selectActBillingManageById" parameterType="Long" resultMap="ActBillingManageResult">
+        <include refid="selectActBillingManageVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertActBillingManage" parameterType="ActBillingManage" useGeneratedKeys="true" keyProperty="id">
+        insert into act_billing_manage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="categoryId != null">category_id,</if>
+            <if test="walletId != null">wallet_id,</if>
+            <if test="way != null">way,</if>
+            <if test="collection4Disbursement != null">collection_4_disbursement,</if>
+            <if test="money != null">money,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="categoryId != null">#{categoryId},</if>
+            <if test="walletId != null">#{walletId},</if>
+            <if test="way != null">#{way},</if>
+            <if test="collection4Disbursement != null">#{collection4Disbursement},</if>
+            <if test="money != null">#{money},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+    <insert id="batchInsertActBillingManage" >
+        insert into act_billing_manage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="categoryId != null">category_id,</if>
+            <if test="walletId != null">wallet_id,</if>
+            <if test="way != null">way,</if>
+            <if test="collection4Disbursement != null">collection_4_disbursement,</if>
+            <if test="money != null">money,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+        </trim>
+        <foreach collection="list" item="item" index="index" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="item.name != null">#{item.name},</if>
+                <if test="item.categoryId != null">#{item.categoryId},</if>
+                <if test="item.walletId != null">#{item.walletId},</if>
+                <if test="item.way != null">#{item.way},</if>
+                <if test="item.collection4Disbursement != null">#{item.collection4Disbursement},</if>
+                <if test="item.money != null">#{item.money},</if>
+                <if test="item.userId != null">#{item.userId},</if>
+                <if test="item.deptId != null">#{item.deptId},</if>
+                <if test="item.createBy != null">#{item.createBy},</if>
+                <if test="item.createTime != null">#{item.createTime},</if>
+                <if test="item.updateBy != null">#{item.updateBy},</if>
+                <if test="item.updateTime != null">#{item.updateTime},</if>
+                <if test="item.remark != null">#{item.remark},</if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <update id="updateActBillingManage" parameterType="ActBillingManage">
+        update act_billing_manage
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="walletId != null">wallet_id = #{walletId},</if>
+            <if test="way != null">way = #{way},</if>
+            <if test="collection4Disbursement != null">collection_4_disbursement = #{collection4Disbursement},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteActBillingManageById" parameterType="Long">
+        delete from act_billing_manage where id = #{id}
+    </delete>
+
+    <delete id="deleteActBillingManageByIds" parameterType="String">
+        delete from act_billing_manage where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

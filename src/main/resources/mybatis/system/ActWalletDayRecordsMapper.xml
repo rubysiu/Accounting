@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruby.project.system.mapper.ActWalletDayRecordsMapper">
+
+    <resultMap type="ActWalletDayRecords" id="ActWalletDayRecordsResult">
+        <result property="id"    column="id"    />
+        <result property="walletId"    column="wallet_id"    />
+        <result property="money"    column="money"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectActWalletDayRecordsVo">
+        select id, wallet_id, money, user_id, dept_id, create_by, create_time, update_by, update_time, remark from act_wallet_day_records
+    </sql>
+
+    <select id="selectActWalletDayRecordsList" parameterType="ActWalletDayRecords" resultMap="ActWalletDayRecordsResult">
+        <include refid="selectActWalletDayRecordsVo"/>
+        <where>
+            <if test="walletId != null "> and wallet_id = #{walletId}</if>
+            <if test="money != null "> and money = #{money}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <!-- 数据范围过滤 -->
+            ${params.dataScope}
+        </where>
+    </select>
+
+    <select id="selectActWalletDayRecordsById" parameterType="Long" resultMap="ActWalletDayRecordsResult">
+        <include refid="selectActWalletDayRecordsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertActWalletDayRecords" parameterType="ActWalletDayRecords" useGeneratedKeys="true" keyProperty="id">
+        insert into act_wallet_day_records
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="walletId != null">wallet_id,</if>
+            <if test="money != null">money,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="walletId != null">#{walletId},</if>
+            <if test="money != null">#{money},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateActWalletDayRecords" parameterType="ActWalletDayRecords">
+        update act_wallet_day_records
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="walletId != null">wallet_id = #{walletId},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteActWalletDayRecordsById" parameterType="Long">
+        delete from act_wallet_day_records where id = #{id}
+    </delete>
+
+    <delete id="deleteActWalletDayRecordsByIds" parameterType="String">
+        delete from act_wallet_day_records where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
